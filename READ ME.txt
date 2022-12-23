@@ -1,0 +1,4 @@
+Testing different pathfinding on snake.
+
+In this project i will be testing different kinds of pathfinding, such as Astar pathfinding and influence maps,
+to see which is best suited for the game.
