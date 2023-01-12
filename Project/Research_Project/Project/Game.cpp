@@ -3,17 +3,28 @@
 #include "Grid.h"
 #include "Snake.h"
 #include "GridGraph.h"
+#include "PathFinder.h"
+#include "AStarPathfinder.h"
 
 Game::Game( const Window& window ) 
 	:m_Window{ window }
 {
 	Initialize( );
 	//Initialize the grid
-	m_pGrid = std::make_unique<Grid>(Point2f{window.width / 2, window.height / 2}, m_Window.height * 0.75f, 11);
+	m_pGrid = std::make_unique<Grid>(Point2f{window.width / 2, window.height / 2}, m_Window.height * 0.75f, 15);
 	//Initialize the snake
 	m_pSnake = std::make_unique<Snake>(m_pGrid->GetSnakeStartPos());
 	//Initialize the graph
-	m_pGraph = std::make_unique<GridGraph>(m_pGrid.get());
+	m_pGraph = std::make_shared<GridGraph>(m_pGrid.get());
+
+	switch (m_SteeringMode)
+	{
+	case SteeringMode::AStar:
+		m_pPathFinder = std::make_unique<AStarPathfinder>(m_pGraph);
+		break;
+	default:
+		break;
+	}
 }
 
 Game::~Game( )
@@ -69,7 +80,11 @@ void Game::UpdateGame()
 	m_SnakeDead = m_pGrid->IsSnakeDead(snake);
 
 	if (!m_SnakeDead)
+	{
 		m_pGraph->Update(m_pGrid.get(), snake);
+		if (m_SteeringMode != SteeringMode::Manual)
+			m_pSnake->ChangeDirection(m_pPathFinder->GetDirectionOutPut());
+	}
 	else
 		std::cout << "your score was " << m_Score << "\n";
 }
@@ -84,12 +99,18 @@ void Game::Draw( ) const
 	m_pGrid->Draw(snake, m_SnakeDead);
 
 	//render the graph
-	m_pGraph->Render();
+	//m_pGraph->Render();
+
+	//render the path
+	if (m_SteeringMode != SteeringMode::Manual)
+	{
+		//m_pPathFinder->Render();
+	}
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 {
-	if (m_UsePathFinding)
+	if (m_SteeringMode != SteeringMode::Manual)
 		return;
 	//Manual input to change snake directions
 	switch (e.keysym.sym)

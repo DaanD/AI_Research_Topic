@@ -56,13 +56,21 @@ void GridGraph::Update(const Grid* pGrid, const std::deque<int>& snake)
 {
 	ResetGraph();
 
-	for (auto index : snake)
+	for (int i{}; i < snake.size(); i++)
 	{
+		int index{ snake[i] };
+
 		m_Nodes[index]->SetType(NodeType::Snake);
-		RemoveConnectionssToAdjacentNodes(index);
+
+		//Remove connections to all of the snake, except the head
+		if(i != 0)
+			RemoveConnectionssToAdjacentNodes(index);
 	}
 
-	m_Nodes[pGrid->GetApplePos()]->SetType(NodeType::Apple);
+	m_Head = snake[0];
+	m_Apple = pGrid->GetApplePos();
+
+	m_Nodes[m_Apple]->SetType(NodeType::Apple);
 }
 
 void GridGraph::ResetGraph()
@@ -104,6 +112,10 @@ void GridGraph::AddConnectionsToAdjacentCells(int idx)
 		{
 			m_Connections.push_back(new Connection{idx, newIdx});
 		}
+		if (IsUniqueConnection(newIdx, idx))
+		{
+			m_Connections.push_back(new Connection{ newIdx, idx });
+		}
 	}
 
 	//If node is in right column, don't add connection to the right
@@ -113,6 +125,10 @@ void GridGraph::AddConnectionsToAdjacentCells(int idx)
 		if (IsUniqueConnection(idx, newIdx))
 		{
 			m_Connections.push_back(new Connection{ idx, newIdx });
+		}
+		if (IsUniqueConnection(newIdx, idx))
+		{
+			m_Connections.push_back(new Connection{ newIdx, idx });
 		}
 	}
 
@@ -124,6 +140,10 @@ void GridGraph::AddConnectionsToAdjacentCells(int idx)
 		{
 			m_Connections.push_back(new Connection{ idx, newIdx });
 		}
+		if (IsUniqueConnection(newIdx, idx))
+		{
+			m_Connections.push_back(new Connection{ newIdx, idx });
+		}
 	}
 
 	//If node is in left column, don't add connection to the left
@@ -133,6 +153,10 @@ void GridGraph::AddConnectionsToAdjacentCells(int idx)
 		if (IsUniqueConnection(idx, newIdx))
 		{
 			m_Connections.push_back(new Connection{ idx, newIdx });
+		}
+		if (IsUniqueConnection(newIdx, idx))
+		{
+			m_Connections.push_back(new Connection{ newIdx, idx });
 		}
 	}
 }
@@ -151,4 +175,20 @@ bool GridGraph::IsUniqueConnection(int from, int to) const
 	}
 
 	return true;
+}
+
+std::vector<Connection*> GridGraph::GetNodeConnections(Node* pNode)
+{
+	std::vector<Connection*> connections{};
+
+	for (auto& connection : m_Connections)
+	{
+		if (connection->GetFrom() == pNode->GetIndex() ||
+			connection->GetTo() == pNode->GetIndex())
+			connections.push_back(connection);
+	}
+
+
+
+	return connections;
 }

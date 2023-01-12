@@ -11,6 +11,12 @@ public:
 
 	~GridGraph();
 
+	GridGraph(GridGraph& rhs) = delete;
+	GridGraph(GridGraph&& rhs) = delete;
+
+	GridGraph& operator=(GridGraph& rhs) = delete;
+	GridGraph& operator=(GridGraph&& rhs) = delete;
+
 	void InitializeGrid(Grid* pGrid);
 
 	void Render();
@@ -20,6 +26,8 @@ public:
 
 	Node* GetNode(int idx) const { return m_Nodes[idx]; };
 	bool IsNodeValid(int idx) const { return (idx < (int)m_Nodes.size() && idx != invalid_node_index); };
+
+	int GetGraphSize() const { return m_GridAmount; }
 
 	int GetIndex(int col, int row) const { return row * m_GridAmount + col; }
 
@@ -34,8 +42,16 @@ public:
 	Point2f GetNodePos(Node* pNode) const { return pNode->GetPosition(); };
 	Point2f GetNodePos(int idx) const { return GetNodePos(GetNode(idx)); }
 
+	Node* GetStartNode() { return m_Nodes[m_Head]; }
+	Node* GetEndNode() { return m_Nodes[m_Apple]; }
+
+	std::vector<Connection*>GetNodeConnections(Node* pNode);
+
 private:
 	float m_NoteRadius{ 5.f };
+
+	int m_Head{};
+	int m_Apple{};
 
 	int m_GridAmount;
 	float m_CellSize;

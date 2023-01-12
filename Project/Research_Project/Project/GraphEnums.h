@@ -10,3 +10,5 @@ enum class NodeType : int
 	Snake,
 	Apple
 };
+
+

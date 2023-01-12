@@ -21,6 +21,8 @@ public:
 		utils::DrawLine(from, to);
 	}
 
+	int GetCost() { return m_Cost; }
+
 	int GetFrom() const { return m_From; }
 	void SetFrom(int newFrom) { m_From = newFrom; }
 
@@ -43,5 +45,7 @@ public:
 private:
 	int m_From{};
 	int m_To{};
+
+	int m_Cost{ 1 };
 };
 

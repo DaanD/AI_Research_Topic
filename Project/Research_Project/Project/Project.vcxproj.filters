@@ -69,7 +69,7 @@
     <ClCompile Include="GridGraph.cpp">
       <Filter>Game Files\Graph</Filter>
     </ClCompile>
-    <ClCompile Include="PathFinder.cpp">
+    <ClCompile Include="AStarPathfinder.cpp">
       <Filter>Game Files\PathFinding</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +126,12 @@
       <Filter>Game Files\Graph</Filter>
     </ClInclude>
     <ClInclude Include="PathFinder.h">
+      <Filter>Game Files\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarPathfinder.h">
+      <Filter>Game Files\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="HeuristicFunctions.h">
       <Filter>Game Files\PathFinding</Filter>
     </ClInclude>
   </ItemGroup>
