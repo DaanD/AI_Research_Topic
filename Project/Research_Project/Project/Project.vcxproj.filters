@@ -13,6 +13,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Game Files\Core Game">
+      <UniqueIdentifier>{7d798bfb-596e-4493-ac33-98b140ab261c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\Graph">
+      <UniqueIdentifier>{45d5cee4-5201-477b-ac38-e615b448e4be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\PathFinding">
+      <UniqueIdentifier>{52aa3180-dd72-406a-9d8d-d6f46f4615f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -52,10 +61,16 @@
       <Filter>Game Files</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>Game Files</Filter>
+      <Filter>Game Files\Core Game</Filter>
     </ClCompile>
     <ClCompile Include="Snake.cpp">
-      <Filter>Game Files</Filter>
+      <Filter>Game Files\Core Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GridGraph.cpp">
+      <Filter>Game Files\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinder.cpp">
+      <Filter>Game Files\PathFinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,10 +108,25 @@
       <Filter>Game Files</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>Game Files</Filter>
+      <Filter>Game Files\Core Game</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
-      <Filter>Game Files</Filter>
+      <Filter>Game Files\Core Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GridGraph.h">
+      <Filter>Game Files\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Game Files\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Connection.h">
+      <Filter>Game Files\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphEnums.h">
+      <Filter>Game Files\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinder.h">
+      <Filter>Game Files\PathFinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

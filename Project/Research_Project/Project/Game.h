@@ -1,6 +1,7 @@
 #pragma once
 class Grid;
 class Snake;
+class GridGraph;
 
 class Game final
 {
@@ -28,14 +29,21 @@ private:
 
 	std::unique_ptr<Grid> m_pGrid;
 	std::unique_ptr<Snake> m_pSnake;
+	std::shared_ptr<GridGraph> m_pGraph;
 
 	float m_Timer{};
 	const float m_Time{ .5f };
 
+	int m_Score{};
+
 	bool m_SnakeDead{false};
+
+	bool m_UsePathFinding{ false };
 
 	// FUNCTIONS
 	void Initialize( );
 	void Cleanup( );
 	void ClearBackground( ) const;
+
+	void UpdateGame();
 };

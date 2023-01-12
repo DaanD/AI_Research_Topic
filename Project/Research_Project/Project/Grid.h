@@ -14,11 +14,15 @@ public:
 	Grid& operator=(Grid& rhs) = delete;
 	Grid& operator=(Grid&& rhs) = delete;
 
-	int GetGridSize() const { return m_GridAmount; };
+	std::vector<Point2f>* GetGrid() { return &m_SquareCenters; }
+
+	float GetCellSize()const { return m_SquareSize / 4.f; }
+
+	int GetGridSize() const { return m_GridAmount; }
 
 	int GetSnakeStartPos();
 
-	int GetApplePos() const { return m_Apple; };
+	int GetApplePos() const { return m_Apple; }
 
 	void NewApple(const std::deque<int> snake);
 
