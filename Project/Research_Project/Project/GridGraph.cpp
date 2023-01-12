@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "GridGraph.h"
 
-GridGraph::GridGraph(Grid* pGrid)
-	:m_GridAmount{pGrid->GetGridSize()}, m_CellSize(pGrid->GetCellSize())
+GridGraph::GridGraph(Grid* pGrid, bool removeConnectionsToSnake)
+	:m_GridAmount{pGrid->GetGridSize()}, m_CellSize(pGrid->GetCellSize()), m_RemoveConnectionsToSnake{removeConnectionsToSnake}
 {
 	InitializeGrid(pGrid);
 }
@@ -16,12 +16,12 @@ GridGraph::~GridGraph()
 	}
 	m_Nodes.clear();
 
-	for (int i{}; i < m_Nodes.size(); i++)
+	for (int i{}; i < m_Connections.size(); i++)
 	{
-		delete m_Nodes[i];
-		m_Nodes[i] = nullptr;
+		delete m_Connections[i];
+		m_Connections[i] = nullptr;
 	}
-	m_Nodes.clear();
+	m_Connections.clear();
 }
 
 void GridGraph::InitializeGrid(Grid* pGrid)
@@ -56,14 +56,16 @@ void GridGraph::Update(const Grid* pGrid, const std::deque<int>& snake)
 {
 	ResetGraph();
 
+	m_Snake = snake;
+
 	for (int i{}; i < snake.size(); i++)
 	{
 		int index{ snake[i] };
 
 		m_Nodes[index]->SetType(NodeType::Snake);
 
-		//Remove connections to all of the snake, except the head
-		if(i != 0)
+		//Remove connections to all of the snake if it's necesarry , except the head
+		if(i != 0 && m_RemoveConnectionsToSnake)
 			RemoveConnectionssToAdjacentNodes(index);
 	}
 
@@ -93,9 +95,19 @@ void GridGraph::ResetGraph()
 
 void GridGraph::RemoveConnectionssToAdjacentNodes(int idx)
 {
-	m_Connections.erase(std::remove_if(m_Connections.begin(), m_Connections.end(), [&](Connection* connection)
+	for(int i{}; i < m_Connections.size(); i++)
+	{
+		if (m_Connections[i]->GetFrom() == idx || m_Connections[i]->GetTo() == idx)
 		{
-			return connection->GetFrom() == idx || connection->GetTo() == idx;
+			delete m_Connections[i];
+			m_Connections[i] = nullptr;
+		}
+	}
+
+
+	m_Connections.erase(std::remove_if(m_Connections.begin(), m_Connections.end(), [](Connection* connection)
+		{
+			return connection == nullptr;
 		}
 	), m_Connections.end());
 }

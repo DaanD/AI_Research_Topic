@@ -7,7 +7,7 @@
 class GridGraph final
 {
 public:
-	GridGraph(Grid* pGrid);
+	GridGraph(Grid* pGrid, bool removeConnectionsToSnake);
 
 	~GridGraph();
 
@@ -38,7 +38,7 @@ public:
 	bool IsEmpty() const { return m_Nodes.empty(); }
 	bool IsUniqueConnection(int from, int to) const;
 
-	float GetNoteRadius() const { return m_NoteRadius; };
+	float GetNoteRadius() const { return m_NodeRadius; };
 	Point2f GetNodePos(Node* pNode) const { return pNode->GetPosition(); };
 	Point2f GetNodePos(int idx) const { return GetNodePos(GetNode(idx)); }
 
@@ -47,8 +47,12 @@ public:
 
 	std::vector<Connection*>GetNodeConnections(Node* pNode);
 
+	std::deque<int>* GetSnake() { return &m_Snake; }
+
 private:
-	float m_NoteRadius{ 5.f };
+	bool m_RemoveConnectionsToSnake{ true };
+
+	float m_NodeRadius{ 5.f };
 
 	int m_Head{};
 	int m_Apple{};
@@ -62,5 +66,7 @@ private:
 	std::vector<Node*> m_Nodes{};
 
 	int m_NextNodeIndex{};
+
+	std::deque<int> m_Snake;
 };
 

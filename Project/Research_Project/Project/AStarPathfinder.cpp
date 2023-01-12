@@ -24,7 +24,7 @@ void AStarPathfinder::Render() const
 	utils::FillEllipse(m_pGraph.lock()->GetNode(m_Path[m_Path.size()-1])->GetPosition(), 5, 5);
 }
 
-Direction AStarPathfinder::GetDirectionOutPut()
+Direction AStarPathfinder::GetDirectionOutPut(Direction lastDirection)
 {
     m_Path = GetPath();
 

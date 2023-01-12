@@ -5,6 +5,7 @@
 #include "GridGraph.h"
 #include "PathFinder.h"
 #include "AStarPathfinder.h"
+#include "InfluenceMaps.h"
 
 Game::Game( const Window& window ) 
 	:m_Window{ window }
@@ -15,12 +16,15 @@ Game::Game( const Window& window )
 	//Initialize the snake
 	m_pSnake = std::make_unique<Snake>(m_pGrid->GetSnakeStartPos());
 	//Initialize the graph
-	m_pGraph = std::make_shared<GridGraph>(m_pGrid.get());
+	m_pGraph = std::make_shared<GridGraph>(m_pGrid.get(), m_SteeringMode != SteeringMode::InfluenceMaps);
 
 	switch (m_SteeringMode)
 	{
 	case SteeringMode::AStar:
 		m_pPathFinder = std::make_unique<AStarPathfinder>(m_pGraph);
+		break;
+	case SteeringMode::InfluenceMaps:
+		m_pPathFinder = std::make_unique<InfluenceMaps>(m_pGraph);
 		break;
 	default:
 		break;
@@ -83,7 +87,7 @@ void Game::UpdateGame()
 	{
 		m_pGraph->Update(m_pGrid.get(), snake);
 		if (m_SteeringMode != SteeringMode::Manual)
-			m_pSnake->ChangeDirection(m_pPathFinder->GetDirectionOutPut());
+			m_pSnake->ChangeDirection(m_pPathFinder->GetDirectionOutPut(m_pSnake->GetDirection()));
 	}
 	else
 		std::cout << "your score was " << m_Score << "\n";
@@ -104,7 +108,7 @@ void Game::Draw( ) const
 	//render the path
 	if (m_SteeringMode != SteeringMode::Manual)
 	{
-		//m_pPathFinder->Render();
+		m_pPathFinder->Render();
 	}
 }
 

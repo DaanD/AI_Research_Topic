@@ -72,6 +72,9 @@
     <ClCompile Include="AStarPathfinder.cpp">
       <Filter>Game Files\PathFinding</Filter>
     </ClCompile>
+    <ClCompile Include="InfluenceMaps.cpp">
+      <Filter>Game Files\PathFinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -132,6 +135,9 @@
       <Filter>Game Files\PathFinding</Filter>
     </ClInclude>
     <ClInclude Include="HeuristicFunctions.h">
+      <Filter>Game Files\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="InfluenceMaps.h">
       <Filter>Game Files\PathFinding</Filter>
     </ClInclude>
   </ItemGroup>

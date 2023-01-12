@@ -82,5 +82,9 @@ namespace utils
 	bool IntersectRectLine(const Rectf& r, const Point2f& p1, const Point2f& p2, float& intersectMin, float& intersectMax);
 
 #pragma endregion CollisionFunctionality
-
+	template<typename T>
+	inline T Lerp(T v0, T v1, float t)
+	{
+		return (1 - t) * v0 + t * v1;
+	}
 }

@@ -19,7 +19,7 @@ public:
 
 	virtual void Render() const {}
 
-	virtual Direction GetDirectionOutPut() = 0;
+	virtual Direction GetDirectionOutPut(Direction lastDirection) = 0;
 
 protected:
 	std::weak_ptr<GridGraph> m_pGraph;

@@ -21,6 +21,8 @@ public:
 
 	bool Update(int gridSize, int apple);
 
+	Direction GetDirection() const { return m_Direction; }
+
 private:
 	std::deque<int> m_Snake{};
 

@@ -40,7 +40,7 @@ private:
 
 	bool m_SnakeDead{false};
 
-	SteeringMode m_SteeringMode{SteeringMode::AStar};
+	SteeringMode m_SteeringMode{SteeringMode::InfluenceMaps};
 
 	// FUNCTIONS
 	void Initialize( );

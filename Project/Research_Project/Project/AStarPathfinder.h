@@ -15,7 +15,7 @@ public:
 
 	virtual void Render() const override;
 
-	virtual Direction GetDirectionOutPut() override;
+	virtual Direction GetDirectionOutPut(Direction lastDirection) override;
 
 private:
 	
