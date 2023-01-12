@@ -1,10 +1,15 @@
 #include "pch.h"
 #include "Game.h"
+#include "Grid.h"
+#include "Snake.h"
 
 Game::Game( const Window& window ) 
 	:m_Window{ window }
 {
 	Initialize( );
+
+	m_pGrid = std::make_unique<Grid>(Point2f{window.width / 2, window.height / 2}, m_Window.height * 0.75f, 11);
+	m_pSnake = std::make_unique<Snake>(m_pGrid->GetSnakeStartPos());
 }
 
 Game::~Game( )
@@ -23,44 +28,65 @@ void Game::Cleanup( )
 
 void Game::Update( float elapsedSec )
 {
-	// Check keyboard state
-	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
-	//if ( pStates[SDL_SCANCODE_RIGHT] )
-	//{
-	//	std::cout << "Right arrow key is down\n";
-	//}
-	//if ( pStates[SDL_SCANCODE_LEFT] && pStates[SDL_SCANCODE_UP])
-	//{
-	//	std::cout << "Left and up arrow keys are down\n";
-	//}
+	if (!m_SnakeDead)
+	{
+		m_Timer += elapsedSec;
+
+		if (m_Timer >= m_Time)
+		{
+			m_Timer -= m_Time;
+
+			std::deque<int> snake;
+			m_pSnake->GetSnake(snake);
+			
+			if (m_pSnake->Update(m_pGrid->GetGridSize(), m_pGrid->GetApplePos()))
+			{
+				m_pSnake->GetSnake(snake);
+				m_pGrid->NewApple(snake);
+			}
+			else
+			{
+				m_pSnake->GetSnake(snake);
+			}
+
+			m_SnakeDead = m_pGrid->IsSnakeDead(snake);
+		}
+	}
 }
 
 void Game::Draw( ) const
 {
 	ClearBackground( );
+
+	std::deque<int> snake;
+	m_pSnake->GetSnake(snake);
+	m_pGrid->Draw(snake, m_SnakeDead);
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 {
-	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;
+	switch (e.keysym.sym)
+	{
+	case SDLK_UP:
+		m_pSnake->ChangeDirection(Direction::Up);
+		break;
+	case SDLK_RIGHT:
+		m_pSnake->ChangeDirection(Direction::Right);
+		break;
+	case SDLK_DOWN:
+		m_pSnake->ChangeDirection(Direction::Down);
+		break;
+	case SDLK_LEFT:
+		m_pSnake->ChangeDirection(Direction::Left);
+		break;
+
+		break;
+	}
 }
 
 void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 {
-	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
-	//switch ( e.keysym.sym )
-	//{
-	//case SDLK_LEFT:
-	//	//std::cout << "Left arrow key released\n";
-	//	break;
-	//case SDLK_RIGHT:
-	//	//std::cout << "`Right arrow key released\n";
-	//	break;
-	//case SDLK_1:
-	//case SDLK_KP_1:
-	//	//std::cout << "Key 1 released\n";
-	//	break;
-	//}
+	
 }
 
 void Game::ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e )
@@ -104,6 +130,6 @@ void Game::ProcessMouseUpEvent( const SDL_MouseButtonEvent& e )
 
 void Game::ClearBackground( ) const
 {
-	glClearColor( 0.0f, 0.0f, 0.3f, 1.0f );
+	glClearColor( 0.3f, 0.3f, 0.3f, 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT );
 }

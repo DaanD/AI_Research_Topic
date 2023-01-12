@@ -1,4 +1,6 @@
 #pragma once
+class Grid;
+class Snake;
 
 class Game final
 {
@@ -23,6 +25,14 @@ public:
 private:
 	// DATA MEMBERS
 	const Window m_Window;
+
+	std::unique_ptr<Grid> m_pGrid;
+	std::unique_ptr<Snake> m_pSnake;
+
+	float m_Timer{};
+	const float m_Time{ .5f };
+
+	bool m_SnakeDead{false};
 
 	// FUNCTIONS
 	void Initialize( );

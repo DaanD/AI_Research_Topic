@@ -51,6 +51,12 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -84,6 +90,12 @@
       <Filter>Framework Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
       <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
