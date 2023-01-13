@@ -5,13 +5,7 @@ The different types of pathfinding that i will be using are the AStar pathfindin
 
 ## Astar
 ### Introduction
-AStar pathfinding uses a graph of nodes, where one node is the start and another is the goal.
-The algorithm will start by making two lists, a closed list and an open list, the closed list are the nodes that have been checked and the open list consists of the nodes tat still need to be checked.  
-First the startnode is added to the openlist and the closed list, then the algorithm loops over the openlist until it is empty.
-In the start of each loop, the neighbours of the current node are added to the open list.
-Each node is evaluated by 2 costs, the G-cost, which is the cost form the start node to the current node, and the H-cost, which is the estimated cost from the current node to the goal. We'll call the sum of these costs the F-cost.  
-The algorithm will loop over all the neighbos and look for the neighbor with the lowest F-cost, this neighbor will be added to the closed list and his neighbors will be added to the open list.  
-This will repeat until the open list is empty, if the goalnode is found, you have a path, but it is currently inverted. To get the final path, simply inverse the closedlist. If the goalnode isn't found, that means it is obstructed somehow and can't be reached.
+The A* pathfinding algorithm utilizes a graph of nodes, where one node is designated as the starting point and another is set as the destination. The algorithm begins by creating two lists: a closed list, which contains nodes that have already been evaluated, and an open list, which includes nodes that still need to be considered. The starting node is added to both lists, and the algorithm continues to iterate through the open list until it is empty. At the start of each loop, the algorithm evaluates the neighboring nodes of the current node and adds them to the open list. Each node is evaluated based on two costs: the G-cost, which is the cost from the starting node to the current node, and the H-cost, which is the estimated cost from the current node to the goal. The sum of these costs is known as the F-cost. The algorithm then identifies the neighboring node with the lowest F-cost, adds it to the closed list, and evaluates its own neighboring nodes. This process repeats until the open list is empty. If the goal node is found, a path is created, but it is inverted. To obtain the final path, the closed list is reversed. If the goal node is not found, it means that it is blocked and cannot be reached.
 
 
 ### Pros
