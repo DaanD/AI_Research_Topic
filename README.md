@@ -25,7 +25,7 @@ Influence maps use a grid or graph of the playfield and adds values or 'influenc
 The fruit will have a big positive influence, while the snake's tail and the walls will always have a big negative influence
 
 ### Problems during programming
--The influence of always only spreads to adjacent cells in a single update, so the graph has to be updated multiple times per fram.  
+-The influence of a node always only spreads to adjacent cells in a single update, so the graph has to be updated multiple times per fram.  
 -Because of the way the influence spreads, the point of origin of an influence will often have less influence than the cells around it, this causes the snake to not prioritize the apple. This was solved by increasing the influence of important points after the influence was updated.
 
 ### Pros
