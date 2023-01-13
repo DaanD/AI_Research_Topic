@@ -25,14 +25,18 @@ Influence maps use a grid or graph of the playfield and adds values or 'influenc
 The fruit will have a big positive influence, while the snake's tail and the walls will always have a big negative influence
 
 ### Problems during programming
--The influence of always only spreads to adjacent cells in a single update, so the graph has to be updated multiple times per fram.
+-The influence of always only spreads to adjacent cells in a single update, so the graph has to be updated multiple times per fram.  
 -Because of the way the influence spreads, the point of origin of an influence will often have less influence than the cells around it, this causes the snake to not prioritize the apple. This was solved by increasing the influence of important points after the influence was updated.
 
 ### Pros
 When the snake gets relatively close to the apple, he will always find it and never run into itself.
 
 ## Cons
-When the snake is outisde of the apple's influence, it will often not find it.
+When the snake is outisde of the apple's influence, it will often not find it.  
 When multiple cells have the same influence, the snake can get stuck in a loop.
   
 ![InfluenceMaps](https://user-images.githubusercontent.com/75164311/212280105-e24cd45f-b1bb-4037-bf6d-174cb4452b8b.gif)
+
+## Conclusion
+Both pathfinding algorithms have their uses and their problems, but aStar seems to be more reliable to get further into the game.
+Neither of them could get a snake game to it's end though, there would have to be another behavior added to take over in cases where the pathfinding fails. 
